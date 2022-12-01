@@ -42,4 +42,19 @@ window.onload = () => {
     slides.classList.add(`sliding`);
     firBut.classList.add(`one-button`, `none`);
     secBut.classList.add(`two-button`, `none`);
+    
+    /*Starting to give the button function
+    (This hide function hides/displays the arrow based on if the user is at the beginning or end)*/
+    let hide = () => {
+        if (increment > 0 && increment < 3){
+            firBut.classList.remove(`none`);
+            secBut.classList.remove(`none`);
+        }
+        else if (index === 0) {
+            firBut.classList.add(`none`);
+        }
+        else if (index === 3){
+            secBut.classList.add(`none`);
+        }
+    }
 }
