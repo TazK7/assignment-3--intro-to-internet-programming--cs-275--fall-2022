@@ -1,0 +1,61 @@
+body{
+    line-height: 1.4;
+}
+
+h1{
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 38px;
+}
+
+h2{
+    font-size: 18px;
+    font-weight: 700px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.space{
+    margin-bottom: 20px;
+}
+
+.middle{
+    text-align: center;
+}
+
+.carousel-slides{
+    display: flex;
+    /*overflow: hidden;*/
+}
+
+.slide{
+    position: relative;
+    width: 640px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 382px ;
+}
+
+.larrow{
+    top: 300px;
+    left: 402px;
+}
+
+.rarrow{
+    top: 300px;
+    right: 399px;
+}
+
+.larrow, .rarrow{
+    position: absolute;
+    z-index: 2;
+}
+
+nav img{
+    width: 40px;
+}
+
+a:link{
+    text-decoration: none;
+}
