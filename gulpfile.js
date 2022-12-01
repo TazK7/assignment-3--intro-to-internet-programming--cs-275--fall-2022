@@ -26,12 +26,6 @@ async function chrome () {
     browserChoice = `chrome`;
 }
 
-let validateHTML = () => {
-    return src([
-        `dev/html/*.html`,
-        `dev/html/**/*.html`])
-        .pipe(htmlCompressor(undefined));
-};
 
 let validateCSS = () => {
     return src([
@@ -80,11 +74,14 @@ let transpileJSForProd = () => {
         .pipe(dest(`prod/scripts`));
 };
 
-    watch(`dev/html/*.html`, validateHTML).on(`change`, reload);
-    watch(`dev/css/*.css`, validateCSS).on(`change`, reload);
-    watch(`dev/js/*.js`, series(validateJS, transpileJSForDev)).on(`change`, reload);
+    watch(`*.html`).on(`change`, reload);
+    watch(`styles/*.css`, validateCSS).on(`change`, reload);
+    watch(`js/*.js`, series(validateJS, transpileJSForDev)).on(`change`, reload);
 
-exports.validateHTML = validateHTML;
+    // watch(`dev/html/*.html`, validateHTML).on(`change`, reload);
+    // watch(`dev/css/*.css`, validateCSS).on(`change`, reload);
+    // watch(`dev/js/*.js`, series(validateJS, transpileJSForDev)).on(`change`, reload);
+
 exports.validateCSS = validateCSS;
 exports.validateJS = validateJS;
 exports.compressHTML = compressHTML;
@@ -94,7 +91,6 @@ exports.transpileJSForDev = transpileJSForDev;
 exports.transpileJSForProd = transpileJSForProd;
 exports.chrome = series(serve, chrome);
 exports.serve = series(
-    validateHTML,
     validateCSS,
     validateJS,
     transpileJSForDev,
