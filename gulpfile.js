@@ -2,6 +2,7 @@ const { src, dest, series, watch } = require(`gulp`),
     htmlCompressor = require(`gulp-htmlmin`),
     cssCompressor = require(`gulp-clean-css`),
     jsCompressor = require(`gulp-uglify`),
+    cssValidator = require(`gulp-eslint`),
     jsLinter = require(`gulp-eslint`),
     babel = require(`gulp-babel`),
     browserSync = require(`browser-sync`),
@@ -28,47 +29,45 @@ async function chrome () {
 
 
 let validateCSS = () => {
-    return src([
-        `dev/css/*.css`,
-        `dev/css/**/*.css`])
-        .pipe(cssCompressor(undefined));
-};
+    return src(`styles/*.css`)
+    .pipe(cssValidator())
+    .pipe(cssValidator.formatEach(`compact`));
+}
 
 let validateJS = () => {
     return src([
-        `dev/js/*.js`,
-        `dev/js/**/*.js`])
+        `js/main.js`])
         .pipe(jsLinter())
         .pipe(jsLinter.formatEach(`compact`));
 }
 
 let compressHTML = () => {
-    return src([`dev/html/*.html`,`dev/html/**/*.html`])
+    return src([`*.html`])
         .pipe(htmlCompressor({collapseWhitespace: true}))
-        .pipe(dest(`prod/css`));
+        .pipe(dest(`prod/html`));
 }
 
 let compressCSS = () => {
-    return src([`dev/css/*.css`,`dev/css/**/*.css`])
+    return src([`styles/*.css`])
         .pipe(cssCompressor({collapseWhitespace: true}))
         .pipe(dest(`prod/css`));
 }
 
 let compressJS = () => {
-    return src(`dev/js/app.js`)
+    return src(`js/main.js`)
     .pipe(babel())
     .pipe(jsCompressor())
-    .pipe(dest(`prod`));
+    .pipe(dest(`prod/main.js`));
 }
 
 let transpileJSForDev = () => {
-    return src(`dev/scripts/*.js`)
+    return src(`js/main.js`)
         .pipe(babel())
-        .pipe(dest(`temp/scripts`));
+        .pipe(dest(`prod/temp`));
 }
 
 let transpileJSForProd = () => {
-    return src(`dev/scripts/*.js`)
+    return src(`js/main.js`)
         .pipe(babel())
         .pipe(jsCompressor())
         .pipe(dest(`prod/scripts`));
@@ -76,11 +75,7 @@ let transpileJSForProd = () => {
 
     watch(`*.html`).on(`change`, reload);
     watch(`styles/*.css`, validateCSS).on(`change`, reload);
-    watch(`js/*.js`, series(validateJS, transpileJSForDev)).on(`change`, reload);
-
-    // watch(`dev/html/*.html`, validateHTML).on(`change`, reload);
-    // watch(`dev/css/*.css`, validateCSS).on(`change`, reload);
-    // watch(`dev/js/*.js`, series(validateJS, transpileJSForDev)).on(`change`, reload);
+    watch(`js/main.js`, series(validateJS, transpileJSForDev)).on(`change`, reload);
 
 exports.validateCSS = validateCSS;
 exports.validateJS = validateJS;
