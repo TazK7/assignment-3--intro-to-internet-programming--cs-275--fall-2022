@@ -1,5 +1,6 @@
 body{
     line-height: 1.4;
+    overflow-x: hidden;
 }
 
 h1{
@@ -9,11 +10,17 @@ h1{
     line-height: 38px;
 }
 
+.carousel{
+    width: 2720px;
+    height: 800px
+}
+
 h2{
     font-size: 18px;
     font-weight: 700px;
     text-align: center;
     margin-top: 25px;
+    font-family: 'Open Sans'
 }
 
 .space{
@@ -24,17 +31,40 @@ h2{
     text-align: center;
 }
 
-.carousel-slides{
-    display: flex;
-    /*overflow: hidden;*/
+.box-one{
+    position: relative;
+    height: 1000px;
+    width: 370px;
+    background-color: white;
+    z-index: 10;
+    top: -1000px;
+    left: 0px;
 }
 
-.slide{
+.box-two{
     position: relative;
+    height: 1000px;
+    width: 390px;
+    background-color: white;
+    z-index: 10;
+    bottom: 2000px;
+    left: 1063px;
+}
+
+.carousel-slides{
+    display: flex;
+    margin-left: 382px;
+}
+
+
+.slide{
     width: 640px;
     padding-left: 20px;
     padding-right: 20px;
-    margin-left: 382px ;
+}
+
+.nav{
+    position: relative;
 }
 
 .larrow{
@@ -49,7 +79,8 @@ h2{
 
 .larrow, .rarrow{
     position: absolute;
-    z-index: 2;
+    z-index: 20;
+    border-radius: 10px;
 }
 
 nav img{
