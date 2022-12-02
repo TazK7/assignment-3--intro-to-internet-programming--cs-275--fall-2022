@@ -1,13 +1,15 @@
 function bands(json) {
     //This section of the code is declaring global variables & adding classes to elements
     let insert = document.querySelectorAll(`div`)[1];
+    let findDiv = document.querySelectorAll(`div`)[0]
     let content = ``;
-
-    //Creating variables that store the anchor elements in nav and give them a class
-    let anchorOne = document.getElementsByTagName(`a`)[0];
-    let anchorTwo = document.getElementsByTagName(`a`)[1];
-    anchorOne.classList.add(`larrow`);
-    anchorTwo.classList.add(`rarrow`);
+    //Creating the boxes to cover the content
+    let boxOne = document.createElement(`div`); 
+    let boxTwo = document.createElement(`div`);
+    boxOne.classList.add(`box-one`);
+    boxTwo.classList.add(`box-two`);
+    findDiv.appendChild(boxOne);
+    findDiv.appendChild(boxTwo);
 
     //Creating For loop to run through Json Data and Displaying it as Prof.Roy stated I should do in class
     for(let i=0; i<json.length; i++){
@@ -31,30 +33,30 @@ window.onload = () => {
     script.setAttribute(`src`, `json/data.json`);
     body.append(script);
 
-    //Declaring Variables for button function
-    let increment, width = 0;
-    let firBut = document.querySelectorAll(`img`)[0];
-    let secBut = document.querySelectorAll(`img`)[1];
-    let slides = document.querySelector(`.carousel-slides`);
-    let oneSlide = document.querySelectorAll(`.carousel-slides`)[0];
+    let anchorOne = document.getElementsByTagName(`a`)[0];
+    let anchorTwo = document.getElementsByTagName(`a`)[1];
+    anchorOne.classList.add(`larrow`);
+    anchorTwo.classList.add(`rarrow`);
 
-    //Giving Classes to variables for function
-    slides.classList.add(`sliding`);
-    firBut.classList.add(`one-button`, `none`);
-    secBut.classList.add(`two-button`, `none`);
-    
-    /*Starting to give the button function
-    (This hide function hides/displays the arrow based on if the user is at the beginning or end)*/
-    let hide = () => {
-        if (increment > 0 && increment < 3){
-            firBut.classList.remove(`none`);
-            secBut.classList.remove(`none`);
-        }
-        else if (index === 0) {
-            firBut.classList.add(`none`);
-        }
-        else if (index === 3){
-            secBut.classList.add(`none`);
-        }
+    let sliding = document.querySelectorAll(`.carousel-slides`)[0]; 
+    let width = 0;
+
+    anchorOne.addEventListener(`click`, () => {
+        width += 680;
+        sliding.style.transform = `translate(`+width+`px)`;
+    });
+
+    anchorTwo.addEventListener(`click`, () => {
+            width -= 680;
+            sliding.style.transform = `translate(`+width+`px)`;
+        });
+
+        document.addEventListener(`keydown`, (e) => {
+            if (e.key === `ArrowRight`) {
+                anchorTwo.click();
+            } else if (e.key === `ArrowLeft`) {
+                anchorOne.click();
+            }
+        });
     }
-}
+
